@@ -29,10 +29,19 @@ app.get("/", (req: Request, res: Response) => {
 app.get("/students", (req: Request, res: Response) => {
   try {
     const program = req.query.program;
+    const targetStdId = req.query.studentId;
 
-    if (program) {
+    if (program && targetStdId) {
       let filtered_students = students.filter(
-        (student) => student.program === program
+        (student) => student.program === program && student.studentId === targetStdId
+      );
+      return res.json({
+        success: true,
+        data: filtered_students,
+      });
+    } else if (program || targetStdId){
+      let filtered_students = students.filter(
+        (student) => student.program === program || student.studentId === targetStdId
       );
       return res.json({
         success: true,
@@ -150,12 +159,58 @@ app.put("/students", (req: Request, res: Response) => {
 
 // DELETE /students, body = {studentId}
 app.delete("/students", (req: Request, res: Response) => {
-  res.json({
-    message: "Implement this!"
-  })
+  try {
+    const body = req.body as Student;
+
+    const result = zStudentDeleteBody.safeParse(body);
+    if (!result.success) {
+      res.status(400);
+      return res.json({
+        ok: false,
+        errors: result.error.issues[0]?.message,
+      });
+    }
+
+
+
+    //check duplicate studentId
+    const foundIndex = students.findIndex(
+      (student) => student.studentId === body.studentId
+    );
+
+    if (foundIndex === -1) {
+      return res.json({
+        success: false,
+        message: "Student does not exists",
+      });
+    }
+    students.splice(foundIndex,1);
+    // add response header 'Link'
+    res.set("Link", `/students/${body.studentId}`);
+
+    return res.json({
+      ok: true,
+      message: `Student ${body.studentId} has been deleted`,
+    })
+    
+  } catch (err) {
+    return res.json({
+      success: false,
+      message: "Somthing is wrong, please try again",
+      error: err,
+    });
+  }
+
 });
 
 // GET /api/me
+app.get("/api/me", (req: Request, res: Response) => {
+  res.json({
+    ok : true,
+    fullName : "Sorawit Sawatdeenaruenat",
+    studentId : "680610726"
+  })
+}) 
 
 app.listen(port, async () => {
   console.log(`🚀 Server running on http://localhost:${port}`);
