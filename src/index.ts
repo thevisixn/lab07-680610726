@@ -1,5 +1,4 @@
-import express from 'express';
-import type { Request, Response } from 'express-serve-static-core';
+import express, { type Request, type Response } from 'express';
 
 // import middleware
 import morgan from "morgan";
