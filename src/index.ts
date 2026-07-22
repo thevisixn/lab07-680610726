@@ -212,10 +212,10 @@ app.get("/api/me", (req: any, res: any) => {
   })
 }) 
 
-if (process.env.NODE_ENV !== 'production') {
-  app.listen(port, () => {
-    console.log(`🚀 Local Server running on http://localhost:${port}`);
-  });
-}
+// if (process.env.NODE_ENV !== 'production') {
+//   app.listen(port, () => {
+//     console.log(`🚀 Local Server running on http://localhost:${port}`);
+//   });
+// }
 
 export default app;
