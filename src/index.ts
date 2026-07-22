@@ -26,7 +26,7 @@ app.get("/api", (req: Request, res: Response) => {
 
 // GET /students
 // get students (by program)
-app.get("api/students", (req: Request, res: Response) => {
+app.get("/api/students", (req: Request, res: Response) => {
   try {
     const program = req.query.program;
     const targetStdId = req.query.studentId;
@@ -65,7 +65,7 @@ app.get("api/students", (req: Request, res: Response) => {
 
 // POST /students, body = {new student data}
 // add a new student
-app.post("api/students", (req: Request, res: Response) => {
+app.post("/api/students", (req: Request, res: Response) => {
   try {
     const body = req.body as Student;
 
@@ -112,7 +112,7 @@ app.post("api/students", (req: Request, res: Response) => {
 
 // PUT /students, body = {studentId}
 // Update specified student
-app.put("api/students", (req: Request, res: Response) => {
+app.put("/api/students", (req: Request, res: Response) => {
   try {
     const body = req.body as Student;
 
@@ -158,7 +158,7 @@ app.put("api/students", (req: Request, res: Response) => {
 });
 
 // DELETE /students, body = {studentId}
-app.delete("api/students", (req: Request, res: Response) => {
+app.delete("/api/students", (req: Request, res: Response) => {
   try {
     const body = req.body as Student;
 
