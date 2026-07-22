@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "nodemon",
-    "build": "tsc && tsc-alias",
+    "build": "tsx",
     "start": "node ./dist/src/index.js"
   },
   "keywords": [],
